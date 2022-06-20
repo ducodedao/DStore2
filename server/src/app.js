@@ -1,4 +1,5 @@
 const express = require('express')
+const errMiddleware = require('./middlewares/errMiddleware')
 
 const app = express()
 
@@ -10,5 +11,8 @@ const product = require('./routes/productRoute')
 
 app.use('/api/v1', category)
 app.use('/api/v1', product)
+
+// Middleware for Errors
+app.use(errMiddleware)
 
 module.exports = app

@@ -1,8 +1,9 @@
 const Category = require('../models/categoryModel')
 const slugify = require('slugify')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 
 // Create Category -- Admin
-exports.addCategory = async (req, res, next) => {
+exports.addCategory = catchAsyncErrors(async (req, res, next) => {
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name),
@@ -23,10 +24,10 @@ exports.addCategory = async (req, res, next) => {
             })
         }
     })
-}
+})
 
 // Get Category -- Admin
-exports.getCategory = async (req, res, next) => {
+exports.getCategory = catchAsyncErrors(async (req, res, next) => {
     const categories = await Category.find()
 
     const createCategories = (categories, parentId = null) => {
@@ -59,4 +60,4 @@ exports.getCategory = async (req, res, next) => {
         success: true,
         categoryList,
     })
-}
+})
