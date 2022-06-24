@@ -1,42 +1,62 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import './Home.css'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import MouseOutlinedIcon from '@mui/icons-material/MouseOutlined'
 import ProductCard from './ProductCard'
+import Title from '../../components/Title/Title'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearErrors, getProduct } from '../../redux/actions/productAction'
+import Loader from '../../components/Loader/Loader'
+import { useAlert } from 'react-alert'
 
 const Home = () => {
-    const product = {
-        name: 'Product',
-        images: [
-            {
-                url: 'https://bachlongmobile.com/media/catalog/product/cache/1/image/040ec09b1e35df139433887a97daa66f/i/p/iphone-13-pro-max-blue-600x600_2_1_2.jpeg',
-            },
-        ],
-        price: '$3000',
-        _id: 'bjkfy8',
-    }
+    const alert = useAlert()
+    const dispatch = useDispatch()
+    const { loading, error, products } = useSelector((state) => state.products)
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+        dispatch(getProduct())
+    }, [dispatch, error, alert])
 
     return (
         <Fragment>
             <Header />
             <Fragment>
-                <div className='banner'>
-                    <p>Welcome to DUStore</p>
-                    <h1>FIND AMAZING PRODUCTS BELOW</h1>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <Fragment>
+                        <Title title='DUStore' />
 
-                    <a href='#container'>
-                        <button>
-                            Scroll <MouseOutlinedIcon />
-                        </button>
-                    </a>
-                </div>
+                        <div className='banner'>
+                            <p>Welcome to DUStore</p>
+                            <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
-                <h2 className='homeHeading'>Featured Products</h2>
+                            <a href='#container'>
+                                <button>
+                                    Scroll <MouseOutlinedIcon />
+                                </button>
+                            </a>
+                        </div>
 
-                <div className='container' id='container'>
-                    <ProductCard product={product} />
-                </div>
+                        <h2 className='homeHeading'>Featured Products</h2>
+
+                        <div className='container' id='container'>
+                            {products &&
+                                products.map((product) => (
+                                    <ProductCard
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                ))}
+                        </div>
+                    </Fragment>
+                )}
             </Fragment>
             <Footer />
         </Fragment>

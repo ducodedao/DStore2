@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import WebFont from 'webfontloader'
 import Home from './pages/Home/Home'
+import ProductDetails from './pages/ProductDetails/ProductDetails'
 
 const App = () => {
     useEffect(() => {
@@ -17,6 +18,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
+                <Route path='/product/:id' element={<ProductDetails />} />
             </Routes>
         </BrowserRouter>
     )

@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
                 <div>
                     <Rating
                         name='text-feedback'
-                        value={0}
+                        value={product.ratings}
                         readOnly
                         precision={0.5}
                         emptyIcon={
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
                         ({product.numOfReviews} Reviews)
                     </span>
                 </div>
-                <span>{`${product.price}`}</span>
+                <span>{`$${product.price}`}</span>
             </Link>
         </Fragment>
     )
