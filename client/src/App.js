@@ -6,6 +6,7 @@ import Home from './pages/Home/Home'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Products from './pages/Products/Products'
 import Search from './components/Product/Search'
+import LoginSignUp from './pages/LoginSignUp/LoginSignUp'
 
 const App = () => {
     useEffect(() => {
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path='/products' element={<Products />} />
                 <Route path='/products/:keyword' element={<Products />} />
                 <Route path='/search' element={<Search />} />
+                <Route path='/login' element={<LoginSignUp />} />
             </Routes>
         </BrowserRouter>
     )
