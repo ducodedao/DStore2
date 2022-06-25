@@ -41,7 +41,6 @@ const LoginSignUp = ({ location }) => {
 
     const loginSubmit = (e) => {
         e.preventDefault()
-        console.log('Login Form Submit')
         dispatch(login(loginEmail, loginPassword))
     }
 
@@ -54,7 +53,6 @@ const LoginSignUp = ({ location }) => {
         myForm.set('email', email)
         myForm.set('password', password)
         myForm.set('avatar', avatar)
-        console.log('SignUp Form Submit')
         dispatch(register(myForm))
     }
 
