@@ -14,6 +14,9 @@ import UserOptions from './components/User/UserOptions'
 import Profile from './pages/Profile/Profile'
 import ProtectedRoute from './components/Route/ProtectedRoute'
 import UpdateProfile from './components/User/UpdateProfile'
+import UpdatePassword from './components/User/UpdatePassword'
+import ForgotPassword from './components/User/ForgotPassword'
+import ResetPassword from './components/User/ResetPassword'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -47,7 +50,17 @@ const App = () => {
                 >
                     <Route path='/account' element={<Profile />} />
                     <Route path='/me/update' element={<UpdateProfile />} />
+                    <Route
+                        path='/password/update'
+                        element={<UpdatePassword />}
+                    />
                 </Route>
+
+                <Route path='/password/forgot' element={<ForgotPassword />} />
+                <Route
+                    path='/password/reset/:token'
+                    element={<ResetPassword />}
+                />
             </Routes>
         </BrowserRouter>
     )
