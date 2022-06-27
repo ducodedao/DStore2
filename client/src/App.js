@@ -28,6 +28,9 @@ import OrderSuccess from './components/Cart/OrderSuccess'
 import MyOrders from './pages/Order/MyOrders'
 import OrderDetails from './components/Order/OrderDetails'
 import Dashboard from './pages/Dashboard/Dashboard'
+import ProductList from './components/Admin/ProductList'
+import NewProduct from './components/Admin/NewProduct'
+import UpdateProduct from './components/Admin/UpdateProduct'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -121,6 +124,12 @@ const App = () => {
                     }
                 >
                     <Route path='/admin/dashboard' element={<Dashboard />} />
+                    <Route path='/admin/products' element={<ProductList />} />
+                    <Route path='/admin/product' element={<NewProduct />} />
+                    <Route
+                        path='/admin/product/:id'
+                        element={<UpdateProduct />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>
