@@ -12,7 +12,7 @@ const ReviewCard = ({ review }) => {
                 <p>{review.name}</p>
                 <Rating
                     name='text-feedback'
-                    value={review.ratings}
+                    value={review.rating}
                     readOnly
                     precision={0.5}
                     emptyIcon={

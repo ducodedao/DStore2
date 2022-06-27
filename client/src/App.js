@@ -25,6 +25,8 @@ import Payment from './components/Cart/Payment'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import OrderSuccess from './components/Cart/OrderSuccess'
+import MyOrders from './pages/Order/MyOrders'
+import OrderDetails from './components/Order/OrderDetails'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -108,6 +110,8 @@ const App = () => {
                     <Route path='/shipping' element={<Shipping />} />
                     <Route path='/order/confirm' element={<ConfirmOrder />} />
                     <Route path='/success' element={<OrderSuccess />} />
+                    <Route path='/orders' element={<MyOrders />} />
+                    <Route path='/order/:id' element={<OrderDetails />} />
                 </Route>
             </Routes>
         </BrowserRouter>
