@@ -31,6 +31,8 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import ProductList from './components/Admin/ProductList'
 import NewProduct from './components/Admin/NewProduct'
 import UpdateProduct from './components/Admin/UpdateProduct'
+import OrderList from './components/Admin/OrderList'
+import ProcessOrder from './components/Admin/ProcessOrder'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -130,6 +132,8 @@ const App = () => {
                         path='/admin/product/:id'
                         element={<UpdateProduct />}
                     />
+                    <Route path='/admin/orders' element={<OrderList />} />
+                    <Route path='/admin/order/:id' element={<ProcessOrder />} />
                 </Route>
             </Routes>
         </BrowserRouter>

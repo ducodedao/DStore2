@@ -18,11 +18,14 @@ import {
 import { Line, Doughnut } from 'react-chartjs-2'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAdminProduct } from '../../redux/actions/productAction'
+import { getAllOrders } from '../../redux/actions/orderAction'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
 
     const { products } = useSelector((state) => state.products)
+
+    const { orders } = useSelector((state) => state.allOrders)
 
     let outOfStock = 0
 
@@ -35,9 +38,16 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(getAdminProduct())
-        // dispatch(getAllOrders())
+        dispatch(getAllOrders())
         // dispatch(getAllUsers())
     }, [dispatch])
+
+    let totalAmount = 0
+
+    orders &&
+        orders.forEach((item) => {
+            totalAmount += item.totalPrice
+        })
 
     ChartJS.register(
         CategoryScale,
@@ -55,8 +65,7 @@ const Dashboard = () => {
                 label: 'TOTAL AMOUNT',
                 backgroundColor: ['tomato'],
                 hoverBackgroundColor: ['rgb(197, 72, 49)'],
-                // data: [0, totalAmount],
-                data: [0, 5000],
+                data: [0, totalAmount],
             },
         ],
     }
@@ -86,8 +95,7 @@ const Dashboard = () => {
                     <div className='dashboardSummary'>
                         <div>
                             <p>
-                                Total Amount <br />
-                                {/* ${totalAmount} */}
+                                Total Amount <br />${totalAmount}
                             </p>
                         </div>
                         <div className='dashboardSummaryBox2'>
@@ -97,8 +105,7 @@ const Dashboard = () => {
                             </Link>
                             <Link to='/admin/orders'>
                                 <p>Orders</p>
-                                <p>5</p>
-                                {/* <p>{orders && orders.length}</p> */}
+                                <p>{orders && orders.length}</p>
                             </Link>
                             <Link to='/admin/users'>
                                 <p>Users</p>
