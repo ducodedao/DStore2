@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import WebFont from 'webfontloader'
@@ -18,9 +18,24 @@ import UpdatePassword from './components/User/UpdatePassword'
 import ForgotPassword from './components/User/ForgotPassword'
 import ResetPassword from './components/User/ResetPassword'
 import Cart from './pages/Cart/Cart'
+import Shipping from './components/Cart/Shipping'
+import ConfirmOrder from './components/Cart/ConfirmOrder'
+import axios from 'axios'
+import Payment from './components/Cart/Payment'
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+import OrderSuccess from './components/Cart/OrderSuccess'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
+
+    const [stripeApiKey, setStripeApiKey] = useState('')
+
+    async function getStripeApiKey() {
+        const { data } = await axios.get('/api/v1/stripeapikey')
+
+        setStripeApiKey(data.stripeApiKey)
+    }
 
     useEffect(() => {
         WebFont.load({
@@ -30,11 +45,32 @@ const App = () => {
         })
 
         store.dispatch(loadUser())
+
+        getStripeApiKey()
     }, [])
 
     return (
         <BrowserRouter>
             {isAuthenticated && <UserOptions user={user} />}
+
+            {stripeApiKey && (
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Routes>
+                        <Route
+                            element={
+                                <ProtectedRoute
+                                    isAuthenticated={isAuthenticated}
+                                />
+                            }
+                        >
+                            <Route
+                                path='/process/payment'
+                                element={<Payment />}
+                            />
+                        </Route>
+                    </Routes>
+                </Elements>
+            )}
 
             <Routes>
                 <Route path='/' element={<Home />} />
@@ -63,6 +99,16 @@ const App = () => {
                     element={<ResetPassword />}
                 />
                 <Route path='/cart' element={<Cart />} />
+
+                <Route
+                    element={
+                        <ProtectedRoute isAuthenticated={isAuthenticated} />
+                    }
+                >
+                    <Route path='/shipping' element={<Shipping />} />
+                    <Route path='/order/confirm' element={<ConfirmOrder />} />
+                    <Route path='/success' element={<OrderSuccess />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )
