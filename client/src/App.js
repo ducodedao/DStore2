@@ -33,6 +33,8 @@ import NewProduct from './components/Admin/NewProduct'
 import UpdateProduct from './components/Admin/UpdateProduct'
 import OrderList from './components/Admin/OrderList'
 import ProcessOrder from './components/Admin/ProcessOrder'
+import UserList from './components/Admin/UserList'
+import UpdateUser from './components/Admin/UpdateUser'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -134,6 +136,8 @@ const App = () => {
                     />
                     <Route path='/admin/orders' element={<OrderList />} />
                     <Route path='/admin/order/:id' element={<ProcessOrder />} />
+                    <Route path='/admin/users' element={<UserList />} />
+                    <Route path='/admin/user/:id' element={<UpdateUser />} />
                 </Route>
             </Routes>
         </BrowserRouter>
