@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import WebFont from 'webfontloader'
 import Home from './pages/Home/Home'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
@@ -36,6 +36,9 @@ import ProcessOrder from './components/Admin/ProcessOrder'
 import UserList from './components/Admin/UserList'
 import UpdateUser from './components/Admin/UpdateUser'
 import ProductReviews from './components/Admin/ProductReviews'
+import About from './components/About/About'
+import Contact from './components/Contact/Contact'
+import NotFound from './components/NotFound/NotFound'
 
 const App = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
@@ -90,6 +93,8 @@ const App = () => {
                 <Route path='/products/:keyword' element={<Products />} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/login' element={<LoginSignUp />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/contact' element={<Contact />} />
 
                 <Route
                     element={
@@ -141,6 +146,9 @@ const App = () => {
                     <Route path='/admin/user/:id' element={<UpdateUser />} />
                     <Route path='/admin/reviews' element={<ProductReviews />} />
                 </Route>
+
+                <Route path='/404' element={<NotFound />} />
+                <Route path='*' element={<Navigate replace to='/404' />} />
             </Routes>
         </BrowserRouter>
     )
